@@ -6,8 +6,10 @@ IO_PORT "clk" PULL_MODE=UP;
 
 //Pushbuttons
 IO_LOC "switch1" 3;
+IO_PORT "switch1" PULL_MODE=UP;
 
-IO_LOC "switch2" 4;
+//IO_LOC "switch2" 4;
+//IO_PORT "switch2" PULL_MODE=UP;
 
 IO_LOC  "led[0]" 10;
 IO_PORT "led[0]" DRIVE = 8;

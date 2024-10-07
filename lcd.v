@@ -244,7 +244,11 @@ module lcd(
 
                 INIT_DONE : begin
                     if (pixel_cnt == 32400) begin
-                        ; // stop
+                        //start next draw loop
+                        pixel_cnt <= 0;
+                        init_state <= INIT_WORKING;
+                        cmd_index <= 59;
+                        
                     end else begin
                         if (bit_loop == 0) begin
                             // start
