@@ -18,6 +18,8 @@ module top(
 	output lcd_data
 );
 
+
+
 localparam MAX_CMDS = 69;
 
 wire [8:0] init_cmd[MAX_CMDS:0];
@@ -141,12 +143,14 @@ assign lcd_data   = spi_data[7]; // MSB
 //					(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F;
 wire [15:0] pixel = {rpixel, gpixel, bpixel};
 //5 bits for red, 6 bits for green, and 5 bits for blue
-wire [4:0] rpixel = (pixel_cnt >= 21600) ? 5'h1F :
-					(pixel_cnt >= 10800) ? 5'h0 : 5'h0;
-wire [5:0] gpixel = (pixel_cnt >= 21600) ? 6'h0 :
-					(pixel_cnt >= 10800) ? 6'h3F : 6'h0;
-wire [4:0] bpixel = (pixel_cnt >= 21600) ? 5'h0 :
-					(pixel_cnt >= 10800) ? 5'h0 : 5'h1F;
+wire [4:0] rpixel = pixel_cnt[14:10];//(pixel_cnt >= 21600) ? 5'h1F : (pixel_cnt >= 240) ? 5'h00 : 5'h1F;
+wire [5:0] gpixel = pixel_cnt[10:5];
+//assign gpixel [4:0] = (pixel_cnt >= 21600) ? 5'h0 :(pixel_cnt >= 10800) ? 5'h3F : 5'h0;
+//assign gpixel [5] = pixel_cnt[11];
+wire [4:0] bpixel = pixel_cnt[4:0];//(pixel_cnt >= 21600) ? 5'h0 : (pixel_cnt >= 10800) ? 5'h0 : 5'h1F;
+
+wire [4:0] rgrid [134:0] [239:0];
+assign rgrid [100][100] = 5'h1F;
 
 always@(posedge clk or negedge resetn) begin
 	if (~resetn) begin
