@@ -14,7 +14,7 @@ module lcd(
 	output lcd_data,
 
     output [15:0] pixel_index,
-    input [15:0] pixel_value,
+    input [15:0] pixel_value
 
 );
 
